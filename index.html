@@ -1,0 +1,811 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Spaces 2 - Global Project Collaboration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            background-size: 200% 200%;
+            animation: gradient 8s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .image-hover:hover {
+            transform: scale(1.03);
+            filter: brightness(1.05);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+        
+        .slide-in-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .slide-in-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .flag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .flag-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+
+        .safespaces-card {
+            background: linear-gradient(145deg, #ffffff, #f5f7fa);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .safespaces-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .safespaces-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+        
+        .scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-8{bottom:2rem}.right-8{right:2rem}.z-0{z-index:0}.z-10{z-index:10}.mx-auto{margin-left:auto;margin-right:auto}.mb-16{margin-bottom:4rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-10{margin-left:2.5rem}.ml-2{margin-left:0.5rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mt-10{margin-top:2.5rem}.mt-16{margin-top:4rem}.mt-20{margin-top:5rem}.mb-12{margin-bottom:3rem}.mb-20{margin-bottom:5rem}.mt-12{margin-top:3rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-16{height:4rem}.h-24{height:6rem}.h-6{height:1.5rem}.h-auto{height:auto}.h-40{height:10rem}.w-12{width:3rem}.w-16{width:4rem}.w-6{width:1.5rem}.w-full{width:100%}.max-w-3xl{max-width:48rem}.max-w-7xl{max-width:80rem}.flex-shrink-0{flex-shrink:0}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-t{border-top-width:1px}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-opacity-20{--tw-border-opacity:0.2}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-transparent{background-color:transparent}.bg-opacity-10{--tw-bg-opacity:0.1}.bg-opacity-20{--tw-bg-opacity:0.2}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-black\/10{--tw-gradient-from:rgb(0 0 0 / 0.1) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-50{--tw-gradient-from:#eff6ff var(--tw-gradient-from-position);--tw-gradient-to:rgb(239 246 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-purple-50{--tw-gradient-to:#faf5ff var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.object-contain{object-fit:contain}.object-cover{object-fit:cover}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-12{padding-top:3rem;padding-bottom:3rem}.pb-3{padding-bottom:0.75rem}.pt-2{padding-top:0.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-opacity-80{--tw-text-opacity:0.8}.text-opacity-90{--tw-text-opacity:0.9}.opacity-90{opacity:0.9}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:bg-opacity-10:hover{--tw-bg-opacity:0.1}.hover\:bg-opacity-90:hover{--tw-bg-opacity:0.9}.hover\:text-blue-600:hover{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.hover\:text-gray-500:hover{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-inset:focus{--tw-ring-inset:inset}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:flex-row{flex-direction:row}.sm\:px-3{padding-left:0.75rem;padding-right:0.75rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:mb-0{margin-bottom:0px}.md\:block{display:block}.md\:hidden{display:none}.md\:w-1\/2{width:50%}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:p-12{padding:3rem}.md\:py-32{padding-top:8rem;padding-bottom:8rem}.md\:pr-8{padding-right:2rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-6xl{font-size:3.75rem;line-height:1}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}@media (min-width: 1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="sticky-header bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-shield-alt text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">Safe Spaces 2</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                        <a href="#country-partners" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Country Partners</a>
+                        <a href="#school-partners" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">School Partners</a>
+                        <a href="#weekly-projects" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#join-us" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300">Join Us</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                <a href="#about" class="text-gray-900 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">About Us</a>
+                <a href="#country-partners" class="text-gray-500 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Country Partners</a>
+                <a href="#school-partners" class="text-gray-500 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">School Partners</a>
+                <a href="#weekly-projects" class="text-gray-500 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#join-us" class="bg-blue-600 text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700 transition duration-300">Join Us</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20 md:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 glow-text">Safe Spaces 2</h1>
+                <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">Promoting non-violence and peace in schools through international collaboration</p>
+                <div class="mt-10">
+                    <a href="#about" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-md text-lg font-semibold transition duration-300 shadow-lg">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-0"></div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">About Safe Spaces 2</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our mission to create secure, inclusive learning environments for students worldwide</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in active">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Who We Are</h3>
+                    <p class="text-gray-600 mb-4">Safe Spaces 2 is an international initiative dedicated to fostering inclusive educational environments where all students can thrive regardless of their background, identity, or circumstances.</p>
+                    <p class="text-gray-600 mb-6">Founded in 2020, we've grown to connect over 1,200 schools across 60+ countries, creating a global network of educators committed to student well-being and academic excellence.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium">
+                            <i class="fas fa-users mr-2"></i> 1,200+ Schools
+                        </div>
+                        <div class="bg-purple-50 text-purple-600 px-4 py-2 rounded-full text-sm font-medium">
+                            <i class="fas fa-globe mr-2"></i> 60+ Countries
+                        </div>
+                        <div class="bg-green-50 text-green-600 px-4 py-2 rounded-full text-sm font-medium">
+                            <i class="fas fa-chalkboard-teacher mr-2"></i> 5,000+ Educators
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in active">
+                    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students collaborating" class="w-full h-auto object-cover image-hover">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-20 grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md fade-in active">
+                    <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-bullseye text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Our Mission</h3>
+                    <p class="text-gray-600">To create safe, inclusive learning environments that empower students to reach their full potential through global collaboration and innovative educational practices.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md fade-in active" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-eye text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Our Vision</h3>
+                    <p class="text-gray-600">A world where every student has access to quality education in an environment that values diversity, inclusion, and mutual respect.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md fade-in active" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-hand-holding-heart text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Our Values</h3>
+                    <p class="text-gray-600">Inclusion, Diversity, Equity, Collaboration, Innovation, and Respect form the foundation of everything we do at Safe Spaces 2.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Country Partners -->
+    <section id="country-partners" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Country Partners</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Collaborating with schools from USA, Russia, Pakistan, Saudi Arabia, Turkey, Bangladesh, Thailand, China, Japan, Iran, Iraq and 60+ more countries</p>
+            </div>
+            
+            <div class="flag-grid">
+                <!-- Country Flags -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/us.jpg" alt="USA" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">United States</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/ru.jpg" alt="Russia" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Russia</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/pk.jpg" alt="Pakistan" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Pakistan</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/sa.jpg" alt="Saudi Arabia" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Saudi Arabia</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/tr.jpg" alt="Turkey" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Turkey</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/bd.jpg" alt="Bangladesh" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Bangladesh</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/th.jpg" alt="Thailand" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">Thailand</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in active">
+                    <img src="https://flagcdn.com/w320/cn.jpg" alt="China" class="w-full h-24 object-cover image-hover">
+                    <div class="p-3 text-center">
+                        <p class="font-medium">China</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 fade-in active">
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">And many more countries participating in our global education initiative</p>
+                <div class="inline-flex items-center bg-blue-50 text-blue-600 px-6 py-2 rounded-full">
+                    <i class="fas fa-globe-americas mr-2"></i>
+                    <span>60+ Countries</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- School Partners -->
+    <section id="school-partners" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 slide-in-left active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">School Partners</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Leading educational institutions collaborating across borders</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- School Logos -->
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-left active">
+                    <img src="https://via.placeholder.com/150x80?text=Global+Academy" alt="Global Academy" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-left active">
+                    <img src="https://via.placeholder.com/150x80?text=International+School" alt="International School" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-left active">
+                    <img src="https://via.placeholder.com/150x80?text=Future+Leaders" alt="Future Leaders" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-left active">
+                    <img src="https://via.placeholder.com/150x80?text=World+Ed" alt="World Ed" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-right active">
+                    <img src="https://via.placeholder.com/150x80?text=United+College" alt="United College" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-right active">
+                    <img src="https://via.placeholder.com/150x80?text=Horizon+School" alt="Horizon School" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-right active">
+                    <img src="https://via.placeholder.com/150x80?text=Global+Prep" alt="Global Prep" class="h-12 object-contain image-hover">
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center card-hover slide-in-right active">
+                    <img src="https://via.placeholder.com/150x80?text=Inter+Academy" alt="Inter Academy" class="h-12 object-contain image-hover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SafeSpaces2 Section -->
+    <section id="safespaces2" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">SafeSpaces2 Initiative</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Creating inclusive learning environments for students worldwide</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="safespaces-card p-8 fade-in active">
+                    <div class="safespaces-icon bg-blue-100 text-blue-600">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Safe Learning</h3>
+                    <p class="text-gray-600 mb-4">We prioritize creating secure environments where students can learn without fear of discrimination or harassment.</p>
+                    <a href="#" class="text-blue-600 font-medium inline-flex items-center">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="safespaces-card p-8 fade-in active" style="transition-delay: 0.2s;">
+                    <div class="safespaces-icon bg-purple-100 text-purple-600">
+                        <i class="fas fa-globe-americas text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Global Standards</h3>
+                    <p class="text-gray-600 mb-4">Implementing internationally recognized protocols for student safety and well-being across all partner schools.</p>
+                    <a href="#" class="text-purple-600 font-medium inline-flex items-center">
+                        View standards <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="safespaces-card p-8 fade-in active" style="transition-delay: 0.4s;">
+                    <div class="safespaces-icon bg-green-100 text-green-600">
+                        <i class="fas fa-hands-helping text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Community Support</h3>
+                    <p class="text-gray-600 mb-4">Building networks of support among students, educators, and parents to maintain safe spaces for everyone.</p>
+                    <a href="#" class="text-green-600 font-medium inline-flex items-center">
+                        Get involved <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 fade-in active">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Join SafeSpaces2 Today</h3>
+                        <p class="text-gray-700 mb-6">Become part of our growing network of schools committed to creating safer learning environments for all students.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#join-us" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium text-center transition duration-300">
+                                Register Your School
+                            </a>
+                            <a href="#" class="bg-white hover:bg-gray-50 text-blue-600 px-6 py-3 rounded-lg font-medium text-center border border-blue-200 transition duration-300">
+                                Learn About Benefits
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students collaborating" class="w-full rounded-lg shadow-md image-hover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors -->
+    <section id="mentors" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Mentors</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Dedicated professionals guiding our global education initiatives</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 shadow-lg card-hover fade-in active">
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-white p-4 rounded-lg shadow-sm flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mentor" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium">Dr. Sarah Chen</p>
+                            <p class="text-sm text-gray-500">Education Specialist</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mentor" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium">Prof. James Wilson</p>
+                            <p class="text-sm text-gray-500">Global Education</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Mentor" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium">Dr. Amina Khan</p>
+                            <p class="text-sm text-gray-500">Cultural Exchange</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Mentor" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium">Prof. Carlos Mendez</p>
+                            <p class="text-sm text-gray-500">Technology in Ed</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-6">Our international team of mentors brings decades of experience in cross-cultural education and project-based learning.</p>
+                <a href="#" class="inline-flex items-center text-blue-600 font-medium">
+                    Meet all mentors <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Projects -->
+    <section id="weekly-projects" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Weekly Projects</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Four weeks of collaborative learning and creativity</p>
+            </div>
+            
+            <!-- Week 1 -->
+            <div class="mb-20 fade-in active">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Week 1: Cultural Exchange</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-chalkboard-teacher text-blue-500 mr-3"></i>
+                            Done by Educators
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="Educators Week 1" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6e424a?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Educators Week 1" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap text-purple-500 mr-3"></i>
+                            Done by Students
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students Week 1" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="Students Week 1" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 2 -->
+            <div class="mb-20 fade-in active">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Week 2: Science &amp; Innovation</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-chalkboard-teacher text-blue-500 mr-3"></i>
+                            Done by Educators
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Educators Week 2" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="Educators Week 2" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap text-purple-500 mr-3"></i>
+                            Done by Students
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students Week 2" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students Week 2" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 3 -->
+            <div class="mb-20 fade-in active">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Week 3: Arts &amp; Creativity</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-chalkboard-teacher text-blue-500 mr-3"></i>
+                            Done by Educators
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1374&amp;q=80" alt="Educators Week 3" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1519683109079-d5f539e1542f?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Educators Week 3" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap text-purple-500 mr-3"></i>
+                            Done by Students
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1415&amp;q=80" alt="Students Week 3" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1473&amp;q=80" alt="Students Week 3" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 4 -->
+            <div class="fade-in active">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Week 4: Global Solutions</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-chalkboard-teacher text-blue-500 mr-3"></i>
+                            Done by Educators
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1469&amp;q=80" alt="Educators Week 4" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1454165804606-0a63a1b9d917?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Educators Week 4" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap text-purple-500 mr-3"></i>
+                            Done by Students
+                        </h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students Week 4" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="bg-white rounded-lg overflow-hidden shadow-md image-hover">
+                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="Students Week 4" class="w-full h-40 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section id="join-us" class="py-20 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in active">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Join Our Global Community?</h2>
+                <p class="text-xl max-w-3xl mx-auto">Become part of our international network of schools and educators</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- School Registration -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20 fade-in active">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-6 mx-auto">
+                        <i class="fas fa-school text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">For Schools</h3>
+                    <p class="text-white text-opacity-90 mb-6">Register your institution to participate in our global projects and access exclusive resources.</p>
+                    <a href="#" class="block w-full bg-white text-blue-600 text-center py-3 px-6 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                        Register School
+                    </a>
+                </div>
+                
+                <!-- Educator Registration -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20 fade-in active" style="transition-delay: 0.1s;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-6 mx-auto">
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">For Educators</h3>
+                    <p class="text-white text-opacity-90 mb-6">Join as an individual educator to collaborate with peers worldwide and develop professionally.</p>
+                    <a href="#" class="block w-full bg-white text-blue-600 text-center py-3 px-6 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                        Join as Educator
+                    </a>
+                </div>
+                
+                <!-- Mentor Application -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20 fade-in active" style="transition-delay: 0.2s;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-6 mx-auto">
+                        <i class="fas fa-hands-helping text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">Become a Mentor</h3>
+                    <p class="text-white text-opacity-90 mb-6">Share your expertise by guiding schools and educators through our global initiatives.</p>
+                    <a href="#" class="block w-full bg-white text-blue-600 text-center py-3 px-6 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                        Apply as Mentor
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center fade-in active">
+                <p class="text-white text-opacity-80 mb-8">Have questions about joining? Contact our team for more information.</p>
+                <a href="#" class="inline-flex items-center bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-white hover:bg-opacity-10 transition duration-300">
+                    <i class="fas fa-envelope mr-2"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shield-alt text-blue-400 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">Safe Spaces 2</span>
+                    </div>
+                    <p class="text-gray-400">Creating inclusive learning environments for students worldwide.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#country-partners" class="text-gray-400 hover:text-white">Country Partners</a></li>
+                        <li><a href="#school-partners" class="text-gray-400 hover:text-white">School Partners</a></li>
+                        <li><a href="#weekly-projects" class="text-gray-400 hover:text-white">Projects</a></li>
+                        <li><a href="#join-us" class="text-gray-400 hover:text-white">Join Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Initiatives</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Global Classroom</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Teacher Exchange</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Student Ambassadors</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">SafeSpaces2</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <p class="text-gray-400 mb-4">Email: info@safespaces2.edu</p>
+                    <p class="text-gray-400">Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400 text-sm">© 2023 Safe Spaces 2. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Scroll animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Sticky header
+        const header = document.querySelector('.sticky-header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body></html>
